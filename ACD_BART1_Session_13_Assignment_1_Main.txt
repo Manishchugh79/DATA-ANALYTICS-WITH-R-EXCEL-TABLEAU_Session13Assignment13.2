@@ -1,6 +1,6 @@
 Session 13 – Generalized Linear
              Models
-         Assignment - 1
+         Assignment - 2
 Contents
 
   Introduction ..................................................................................................................................................... 2
@@ -14,7 +14,6 @@ Session 13 – Generalized Linear
   Problem Statement ......................................................................................................................................... 2
 
   Expected Output .............................................................................................................................................. 2
-
 
 
 
@@ -37,12 +36,100 @@ Not Applicable
 
    Problem Statement
 1. Use the given link Data Set
+
 Answer the below questions:
-a. Find out top 5 attributes having highest correlation (select only Numeric features).
-b. Find out top 3 reasons for having more crime in a city.
-c. Which all attributes have correlation with crime rate?
+
+a. Visualize the correlation between all variables in a meaningful and clear way of representing. Find out top 3 reasons for having more crime in a city.
+
+Answer:
+library(readr)
+library(data.table)
+
+getwd()
+p<-"D:/ACADGILD/Assignments from Dashboard"
+setwd(p)
+crime_data<-fread("D:/ACADGILD/Assignments from Dashboard/COBRA-YTD2017.csv")
+View(crime_data)
+str(crime_data) 
+
+pairs(COBRA.YTD2017)
+plot(x,y, data=COBRA.YTD2017)
 
 
+b. What is the difference between co-variance and correlation? Take an example from this dataset and show the differences if any? 
+Answer:
+Correlation is when the change in one item may result in the change in the another item and varies from -1 to +1. 
+Ccovariance is a measure used to indicate the extent to which two random variables change in tandem.Covariance is affected by the change in scale
+
+> cor(COBRA.YTD2017$x, COBRA.YTD2017$y, method = "spearman")
+[1] 0.2427933
+> cor(COBRA.YTD2017$x, COBRA.YTD2017$y, method = "pearson")
+[1] -0.9998355
+
+# covariance between 2 variables
+> cov(COBRA.YTD2017$x, COBRA.YTD2017$y) 
+[1] -23.86342
+
+> cor.test(COBRA.YTD2017$x, COBRA.YTD2017$y, method = "spearman")
+	Spearman's rank correlation rho
+
+data:  COBRA.YTD2017$x and COBRA.YTD2017$y
+S = 2.4181e+12, p-value < 2.2e-16
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.2427933 
+
+> cor.test(COBRA.YTD2017$x, COBRA.YTD2017$y, method = "pearson")
+
+	Pearson's product-moment correlation
+
+data:  COBRA.YTD2017$x and COBRA.YTD2017$y
+t = -9017.2, df = 26757, p-value < 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.9998394 -0.9998315
+sample estimates:
+       cor 
+-0.9998355 
+
+> cor.test(COBRA.YTD2017$x, COBRA.YTD2017$y, method = "kendal")
+
+	Kendall's rank correlation tau
+
+data:  COBRA.YTD2017$x and COBRA.YTD2017$y
+z = 41.054, p-value < 2.2e-16
+alternative hypothesis: true tau is not equal to 0
+sample estimates:
+      tau 
+0.1674221 
+
+> source('D:/ACADGILD/Assignments from Dashboard/rscript/Session13Assignment2.R')
+Classes ‘data.table’ and 'data.frame':	26759 obs. of  23 variables:
+ $ MI_PRINX         : int  8924155 8924156 8924157 8924158 8924159 8924160 8924161 8924162 8924163 8924164 ...
+ $ offense_id       : num  1.74e+08 1.74e+08 1.74e+08 1.74e+08 1.74e+08 ...
+ $ rpt_date         : chr  "12/31/2017" "12/31/2017" "12/31/2017" "12/31/2017" ...
+ $ occur_date       : chr  "12/30/2017" "12/18/2017" "12/30/2017" "12/30/2017" ...
+ $ occur_time       : chr  "23:15:00" "13:00:00" "22:01:00" "20:00:00" ...
+ $ poss_date        : chr  "12/31/2017" "12/30/2017" "12/31/2017" "12/31/2017" ...
+ $ poss_time        : chr  "0:30:00" "22:00:00" "1:00:00" "1:06:00" ...
+ $ beat             : int  510 501 303 507 409 612 605 603 605 304 ...
+ $ apt_office_prefix: chr  "" "" "" "" ...
+ $ apt_office_num   : chr  "" "" "" "" ...
+ $ location         : chr  "43 JESSE HILL JR DR NE" "1169 ATLANTIC DR NW" "633 PRYOR ST SW" "333 NELSON ST SW" ...
+ $ MinOfucr         : int  640 640 640 640 640 650 311 640 640 531 ...
+ $ MinOfibr_code    : chr  "2305" "2305" "2305" "2305" ...
+ $ dispo_code       : chr  "" "" "" "" ...
+ $ MaxOfnum_victims : int  2 1 1 1 2 1 1 1 1 1 ...
+ $ Shift            : chr  "Morn" "Unk" "Morn" "Eve" ...
+ $ Avg Day          : chr  "Sat" "Unk" "Sat" "Sat" ...
+ $ loc_type         : int  13 13 18 18 18 18 26 18 13 26 ...
+ $ UC2 Literal      : chr  "LARCENY-FROM VEHICLE" "LARCENY-FROM VEHICLE" "LARCENY-FROM VEHICLE" "LARCENY-FROM VEHICLE" ...
+ $ neighborhood     : chr  "Downtown" "Home Park" "Mechanicsville" "Castleberry Hill" ...
+ $ npu              : chr  "M" "E" "V" "M" ...
+ $ x                : num  -84.4 -84.4 -84.4 -84.4 -84.5 ...
+ $ y                : num  33.8 33.8 33.7 33.8 33.7 ...
+ - attr(*, ".internal.selfref")=<externalptr> 
    Expected Output
 Not Applicable
 
